@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.znnf.mapper.ZnnfMemberWelfareMapper" >
+  <resultMap id="BaseResultMap" type="cn.znnf.model.ZnnfMemberWelfare" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="welfare_rank" property="welfare_rank" jdbcType="VARCHAR" />
+    <result column="welfare_integral_lowerlimit" property="welfare_integral_lowerlimit" jdbcType="INTEGER" />
+    <result column="welfare_integral_upperlimit" property="welfare_integral_upperlimit" jdbcType="INTEGER" />
+    <result column="welfare_discount" property="welfare_discount" jdbcType="DECIMAL" />
+    <result column="welfare_remark" property="welfare_remark" jdbcType="LONGVARCHAR" />
+    <result column="welfare_create_name" property="welfare_create_name" jdbcType="VARCHAR" />
+    <result column="welfare_create_time" property="welfare_create_time" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, welfare_rank, welfare_integral_lowerlimit, welfare_integral_upperlimit, welfare_discount, 
+    welfare_remark, welfare_create_name, welfare_create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.znnf.model.ZnnfMemberWelfareExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from znnf_member_welfare
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from znnf_member_welfare
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from znnf_member_welfare
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.znnf.model.ZnnfMemberWelfareExample" >
+    delete from znnf_member_welfare
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.znnf.model.ZnnfMemberWelfare" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into znnf_member_welfare (welfare_rank, welfare_integral_lowerlimit, 
+      welfare_integral_upperlimit, welfare_discount, 
+      welfare_remark, welfare_create_name, 
+      welfare_create_time)
+    values (#{welfare_rank,jdbcType=VARCHAR}, #{welfare_integral_lowerlimit,jdbcType=INTEGER}, 
+      #{welfare_integral_upperlimit,jdbcType=INTEGER}, #{welfare_discount,jdbcType=DECIMAL}, 
+      #{welfare_remark,jdbcType=LONGVARCHAR}, #{welfare_create_name,jdbcType=VARCHAR}, 
+      #{welfare_create_time,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.znnf.model.ZnnfMemberWelfare" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into znnf_member_welfare
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="welfare_rank != null" >
+        welfare_rank,
+      </if>
+      <if test="welfare_integral_lowerlimit != null" >
+        welfare_integral_lowerlimit,
+      </if>
+      <if test="welfare_integral_upperlimit != null" >
+        welfare_integral_upperlimit,
+      </if>
+      <if test="welfare_discount != null" >
+        welfare_discount,
+      </if>
+      <if test="welfare_remark != null" >
+        welfare_remark,
+      </if>
+      <if test="welfare_create_name != null" >
+        welfare_create_name,
+      </if>
+      <if test="welfare_create_time != null" >
+        welfare_create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="welfare_rank != null" >
+        #{welfare_rank,jdbcType=VARCHAR},
+      </if>
+      <if test="welfare_integral_lowerlimit != null" >
+        #{welfare_integral_lowerlimit,jdbcType=INTEGER},
+      </if>
+      <if test="welfare_integral_upperlimit != null" >
+        #{welfare_integral_upperlimit,jdbcType=INTEGER},
+      </if>
+      <if test="welfare_discount != null" >
+        #{welfare_discount,jdbcType=DECIMAL},
+      </if>
+      <if test="welfare_remark != null" >
+        #{welfare_remark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="welfare_create_name != null" >
+        #{welfare_create_name,jdbcType=VARCHAR},
+      </if>
+      <if test="welfare_create_time != null" >
+        #{welfare_create_time,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.znnf.model.ZnnfMemberWelfareExample" resultType="java.lang.Integer" >
+    select count(*) from znnf_member_welfare
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update znnf_member_welfare
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.welfare_rank != null" >
+        welfare_rank = #{record.welfare_rank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.welfare_integral_lowerlimit != null" >
+        welfare_integral_lowerlimit = #{record.welfare_integral_lowerlimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.welfare_integral_upperlimit != null" >
+        welfare_integral_upperlimit = #{record.welfare_integral_upperlimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.welfare_discount != null" >
+        welfare_discount = #{record.welfare_discount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.welfare_remark != null" >
+        welfare_remark = #{record.welfare_remark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.welfare_create_name != null" >
+        welfare_create_name = #{record.welfare_create_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.welfare_create_time != null" >
+        welfare_create_time = #{record.welfare_create_time,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update znnf_member_welfare
+    set id = #{record.id,jdbcType=INTEGER},
+      welfare_rank = #{record.welfare_rank,jdbcType=VARCHAR},
+      welfare_integral_lowerlimit = #{record.welfare_integral_lowerlimit,jdbcType=INTEGER},
+      welfare_integral_upperlimit = #{record.welfare_integral_upperlimit,jdbcType=INTEGER},
+      welfare_discount = #{record.welfare_discount,jdbcType=DECIMAL},
+      welfare_remark = #{record.welfare_remark,jdbcType=LONGVARCHAR},
+      welfare_create_name = #{record.welfare_create_name,jdbcType=VARCHAR},
+      welfare_create_time = #{record.welfare_create_time,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.znnf.model.ZnnfMemberWelfare" >
+    update znnf_member_welfare
+    <set >
+      <if test="welfare_rank != null" >
+        welfare_rank = #{welfare_rank,jdbcType=VARCHAR},
+      </if>
+      <if test="welfare_integral_lowerlimit != null" >
+        welfare_integral_lowerlimit = #{welfare_integral_lowerlimit,jdbcType=INTEGER},
+      </if>
+      <if test="welfare_integral_upperlimit != null" >
+        welfare_integral_upperlimit = #{welfare_integral_upperlimit,jdbcType=INTEGER},
+      </if>
+      <if test="welfare_discount != null" >
+        welfare_discount = #{welfare_discount,jdbcType=DECIMAL},
+      </if>
+      <if test="welfare_remark != null" >
+        welfare_remark = #{welfare_remark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="welfare_create_name != null" >
+        welfare_create_name = #{welfare_create_name,jdbcType=VARCHAR},
+      </if>
+      <if test="welfare_create_time != null" >
+        welfare_create_time = #{welfare_create_time,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.znnf.model.ZnnfMemberWelfare" >
+    update znnf_member_welfare
+    set welfare_rank = #{welfare_rank,jdbcType=VARCHAR},
+      welfare_integral_lowerlimit = #{welfare_integral_lowerlimit,jdbcType=INTEGER},
+      welfare_integral_upperlimit = #{welfare_integral_upperlimit,jdbcType=INTEGER},
+      welfare_discount = #{welfare_discount,jdbcType=DECIMAL},
+      welfare_remark = #{welfare_remark,jdbcType=LONGVARCHAR},
+      welfare_create_name = #{welfare_create_name,jdbcType=VARCHAR},
+      welfare_create_time = #{welfare_create_time,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="cn.znnf.model.ZnnfMemberWelfareExample" >
+    select 
+<if test="distinct" > 
+distinct 
+</if> 
+<include refid="Base_Column_List" /> 
+from znnf_member_welfare
+<if test="_parameter != null" > 
+<include refid="Example_Where_Clause" /> 
+</if> 
+<if test="orderByClause != null" > 
+order by ${orderByClause} 
+</if> 
+limit #{pageIndex},#{pageSize} 
+
+  </select>
+</mapper>

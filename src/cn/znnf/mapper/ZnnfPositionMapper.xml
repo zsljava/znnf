@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.znnf.mapper.ZnnfPositionMapper" >
+  <resultMap id="BaseResultMap" type="cn.znnf.model.ZnnfPosition" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="position_name" property="position_name" jdbcType="VARCHAR" />
+    <result column="position_level" property="position_level" jdbcType="VARCHAR" />
+    <result column="position_desc" property="position_desc" jdbcType="LONGVARCHAR" />
+    <result column="position_status" property="position_status" jdbcType="BIT" />
+    <result column="position_type" property="position_type" jdbcType="BIT" />
+    <result column="positoin_remark" property="positoin_remark" jdbcType="LONGVARCHAR" />
+    <result column="position_create_name" property="position_create_name" jdbcType="VARCHAR" />
+    <result column="position_create_time" property="position_create_time" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, position_name, position_level, position_desc, position_status, position_type, 
+    positoin_remark, position_create_name, position_create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.znnf.model.ZnnfPositionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from znnf_position
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from znnf_position
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from znnf_position
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.znnf.model.ZnnfPositionExample" >
+    delete from znnf_position
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.znnf.model.ZnnfPosition" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into znnf_position (position_name, position_level, position_desc, 
+      position_status, position_type, positoin_remark, 
+      position_create_name, position_create_time
+      )
+    values (#{position_name,jdbcType=VARCHAR}, #{position_level,jdbcType=VARCHAR}, #{position_desc,jdbcType=LONGVARCHAR}, 
+      #{position_status,jdbcType=BIT}, #{position_type,jdbcType=BIT}, #{positoin_remark,jdbcType=LONGVARCHAR}, 
+      #{position_create_name,jdbcType=VARCHAR}, #{position_create_time,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.znnf.model.ZnnfPosition" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into znnf_position
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="position_name != null" >
+        position_name,
+      </if>
+      <if test="position_level != null" >
+        position_level,
+      </if>
+      <if test="position_desc != null" >
+        position_desc,
+      </if>
+      <if test="position_status != null" >
+        position_status,
+      </if>
+      <if test="position_type != null" >
+        position_type,
+      </if>
+      <if test="positoin_remark != null" >
+        positoin_remark,
+      </if>
+      <if test="position_create_name != null" >
+        position_create_name,
+      </if>
+      <if test="position_create_time != null" >
+        position_create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="position_name != null" >
+        #{position_name,jdbcType=VARCHAR},
+      </if>
+      <if test="position_level != null" >
+        #{position_level,jdbcType=VARCHAR},
+      </if>
+      <if test="position_desc != null" >
+        #{position_desc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="position_status != null" >
+        #{position_status,jdbcType=BIT},
+      </if>
+      <if test="position_type != null" >
+        #{position_type,jdbcType=BIT},
+      </if>
+      <if test="positoin_remark != null" >
+        #{positoin_remark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="position_create_name != null" >
+        #{position_create_name,jdbcType=VARCHAR},
+      </if>
+      <if test="position_create_time != null" >
+        #{position_create_time,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.znnf.model.ZnnfPositionExample" resultType="java.lang.Integer" >
+    select count(*) from znnf_position
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update znnf_position
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.position_name != null" >
+        position_name = #{record.position_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position_level != null" >
+        position_level = #{record.position_level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position_desc != null" >
+        position_desc = #{record.position_desc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.position_status != null" >
+        position_status = #{record.position_status,jdbcType=BIT},
+      </if>
+      <if test="record.position_type != null" >
+        position_type = #{record.position_type,jdbcType=BIT},
+      </if>
+      <if test="record.positoin_remark != null" >
+        positoin_remark = #{record.positoin_remark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.position_create_name != null" >
+        position_create_name = #{record.position_create_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position_create_time != null" >
+        position_create_time = #{record.position_create_time,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update znnf_position
+    set id = #{record.id,jdbcType=INTEGER},
+      position_name = #{record.position_name,jdbcType=VARCHAR},
+      position_level = #{record.position_level,jdbcType=VARCHAR},
+      position_desc = #{record.position_desc,jdbcType=LONGVARCHAR},
+      position_status = #{record.position_status,jdbcType=BIT},
+      position_type = #{record.position_type,jdbcType=BIT},
+      positoin_remark = #{record.positoin_remark,jdbcType=LONGVARCHAR},
+      position_create_name = #{record.position_create_name,jdbcType=VARCHAR},
+      position_create_time = #{record.position_create_time,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.znnf.model.ZnnfPosition" >
+    update znnf_position
+    <set >
+      <if test="position_name != null" >
+        position_name = #{position_name,jdbcType=VARCHAR},
+      </if>
+      <if test="position_level != null" >
+        position_level = #{position_level,jdbcType=VARCHAR},
+      </if>
+      <if test="position_desc != null" >
+        position_desc = #{position_desc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="position_status != null" >
+        position_status = #{position_status,jdbcType=BIT},
+      </if>
+      <if test="position_type != null" >
+        position_type = #{position_type,jdbcType=BIT},
+      </if>
+      <if test="positoin_remark != null" >
+        positoin_remark = #{positoin_remark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="position_create_name != null" >
+        position_create_name = #{position_create_name,jdbcType=VARCHAR},
+      </if>
+      <if test="position_create_time != null" >
+        position_create_time = #{position_create_time,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.znnf.model.ZnnfPosition" >
+    update znnf_position
+    set position_name = #{position_name,jdbcType=VARCHAR},
+      position_level = #{position_level,jdbcType=VARCHAR},
+      position_desc = #{position_desc,jdbcType=LONGVARCHAR},
+      position_status = #{position_status,jdbcType=BIT},
+      position_type = #{position_type,jdbcType=BIT},
+      positoin_remark = #{positoin_remark,jdbcType=LONGVARCHAR},
+      position_create_name = #{position_create_name,jdbcType=VARCHAR},
+      position_create_time = #{position_create_time,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="cn.znnf.model.ZnnfPositionExample" >
+    select 
+<if test="distinct" > 
+distinct 
+</if> 
+<include refid="Base_Column_List" /> 
+from znnf_position
+<if test="_parameter != null" > 
+<include refid="Example_Where_Clause" /> 
+</if> 
+<if test="orderByClause != null" > 
+order by ${orderByClause} 
+</if> 
+limit #{pageIndex},#{pageSize} 
+
+  </select>
+</mapper>

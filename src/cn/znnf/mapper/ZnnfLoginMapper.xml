@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.znnf.mapper.ZnnfLoginMapper" >
+  <resultMap id="BaseResultMap" type="cn.znnf.model.ZnnfLogin" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="login_name" property="login_name" jdbcType="VARCHAR" />
+    <result column="login_time" property="login_time" jdbcType="DATE" />
+    <result column="login_IP" property="login_IP" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, login_name, login_time, login_IP
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.znnf.model.ZnnfLoginExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from znnf_login
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from znnf_login
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from znnf_login
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.znnf.model.ZnnfLoginExample" >
+    delete from znnf_login
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.znnf.model.ZnnfLogin" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into znnf_login (login_name, login_time, login_IP
+      )
+    values (#{login_name,jdbcType=VARCHAR}, #{login_time,jdbcType=DATE}, #{login_IP,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.znnf.model.ZnnfLogin" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into znnf_login
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="login_name != null" >
+        login_name,
+      </if>
+      <if test="login_time != null" >
+        login_time,
+      </if>
+      <if test="login_IP != null" >
+        login_IP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="login_name != null" >
+        #{login_name,jdbcType=VARCHAR},
+      </if>
+      <if test="login_time != null" >
+        #{login_time,jdbcType=DATE},
+      </if>
+      <if test="login_IP != null" >
+        #{login_IP,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.znnf.model.ZnnfLoginExample" resultType="java.lang.Integer" >
+    select count(*) from znnf_login
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update znnf_login
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.login_name != null" >
+        login_name = #{record.login_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.login_time != null" >
+        login_time = #{record.login_time,jdbcType=DATE},
+      </if>
+      <if test="record.login_IP != null" >
+        login_IP = #{record.login_IP,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update znnf_login
+    set id = #{record.id,jdbcType=INTEGER},
+      login_name = #{record.login_name,jdbcType=VARCHAR},
+      login_time = #{record.login_time,jdbcType=DATE},
+      login_IP = #{record.login_IP,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.znnf.model.ZnnfLogin" >
+    update znnf_login
+    <set >
+      <if test="login_name != null" >
+        login_name = #{login_name,jdbcType=VARCHAR},
+      </if>
+      <if test="login_time != null" >
+        login_time = #{login_time,jdbcType=DATE},
+      </if>
+      <if test="login_IP != null" >
+        login_IP = #{login_IP,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.znnf.model.ZnnfLogin" >
+    update znnf_login
+    set login_name = #{login_name,jdbcType=VARCHAR},
+      login_time = #{login_time,jdbcType=DATE},
+      login_IP = #{login_IP,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="cn.znnf.model.ZnnfLoginExample" >
+    select 
+<if test="distinct" > 
+distinct 
+</if> 
+<include refid="Base_Column_List" /> 
+from znnf_login
+<if test="_parameter != null" > 
+<include refid="Example_Where_Clause" /> 
+</if> 
+<if test="orderByClause != null" > 
+order by ${orderByClause} 
+</if> 
+limit #{pageIndex},#{pageSize} 
+
+  </select>
+</mapper>
